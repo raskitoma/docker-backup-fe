@@ -1,6 +1,7 @@
 services:
 
   backend:
+    container_name: docker_backup_backend
     build: ./backend
     ports:
       - "8000:8000"
@@ -9,9 +10,12 @@ services:
       - /backupssh:/backupssh:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - backend_data:/app
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
     restart: unless-stopped
 
   frontend:
+    container_name: docker_backup_frontend
     build: ./frontend
     ports:
       - "4173:4173"
