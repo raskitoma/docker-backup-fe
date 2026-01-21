@@ -14,9 +14,22 @@ export default function App() {
   const [containers,setContainers] = useState([])
 
   const loadAll = async () => {
-    setSystem((await api.get("/system")).data)
-    setConfig((await api.get("/config")).data)
-    setContainers((await api.get("/containers")).data)
+    try {
+      const s = await api.get("/system")
+      const c = await api.get("/config")
+      const ct = await api.get("/containers")
+
+      console.log("SYSTEM:", s.data)
+      console.log("CONFIG:", c.data)
+      console.log("CONTAINERS:", ct.data)
+
+      setSystem(s.data)
+      setConfig(c.data)
+      setContainers(ct.data)
+
+    } catch (err) {
+      console.error("API ERROR:", err)
+    }
   }
 
   useEffect(()=>{

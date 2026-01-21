@@ -7,7 +7,6 @@ def get_docker_client():
         print("Docker connection failed:", e)
         return None
 
-
 def get_running_containers():
     client = get_docker_client()
 
