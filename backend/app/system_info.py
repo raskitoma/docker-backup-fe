@@ -1,23 +1,46 @@
-import socket
 import psutil
+import socket
 import shutil
 
+HOST_PROC = "/host/proc"
+HOST_ROOT = "/host/root"
+
 def get_system_info():
-    hostname = socket.gethostname()
-    ip = socket.gethostbyname(hostname)
 
-    cpu = psutil.cpu_percent()
+    # Hostname (from host filesystem)
+    try:
+        with open("/host/root/etc/hostname") as f:
+            hostname = f.read().strip()
+    except:
+        hostname = socket.gethostname()
+
+    # CPU
+    cpu_percent = psutil.cpu_percent(interval=0.5)
     cores = psutil.cpu_count()
-    ram = psutil.virtual_memory().total // (1024**3)
 
-    disk = shutil.disk_usage("/")
-    free_disk = disk.free // (1024**3)
+    # RAM
+    mem = psutil.virtual_memory()
+    ram_gb = mem.total // (1024**3)
+
+    # Disk (host root)
+    disk = shutil.disk_usage(HOST_ROOT)
+    free_disk_gb = disk.free // (1024**3)
+
+    # Host IP (best method inside container)
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+    except:
+        ip = "unknown"
+    finally:
+        s.close()
 
     return {
         "hostname": hostname,
         "ip": ip,
-        "cpu_percent": cpu,
+        "cpu_percent": cpu_percent,
         "cores": cores,
-        "ram_gb": ram,
-        "free_disk_gb": free_disk
+        "ram_gb": ram_gb,
+        "free_disk_gb": free_disk_gb
     }

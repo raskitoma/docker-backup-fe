@@ -9,6 +9,9 @@ services:
       - /configs/params:/configs/params:ro
       - /backupssh:/backupssh:ro
       - /var/run/docker.sock:/var/run/docker.sock
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/root:ro      
       - backend_data:/app
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
