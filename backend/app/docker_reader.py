@@ -1,6 +1,5 @@
 import docker
 
-
 def get_docker_client():
     try:
         return docker.DockerClient(base_url="unix:///var/run/docker.sock")
