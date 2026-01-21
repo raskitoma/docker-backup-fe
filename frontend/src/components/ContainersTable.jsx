@@ -5,10 +5,9 @@ import { Column } from "primereact/column"
 import { Tag } from "primereact/tag"
 import { Button } from "primereact/button"
 import { InputText } from "primereact/inputtext"
-import { IconField } from "primereact/iconField"
+import { IconField } from "primereact/iconfield"
 import { InputIcon } from "primereact/inputicon"
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
-
 
 import ConfigModal from "./ConfigModal"
 import FilesModal from "./FilesModal"
