@@ -7,7 +7,7 @@ from .system_info import get_system_info
 from .file_scanner import scan_backups
 from .database import SessionLocal, ContainerCache
 
-CONFIG_PATH = "/configs/params/config.ini"
+CONFIG_PATH = "../configs/params/config.ini"
 
 app = FastAPI(title="Backup Dashboard API")
 
