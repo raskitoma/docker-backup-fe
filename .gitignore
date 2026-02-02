@@ -72,7 +72,7 @@ data/
 
 /backupssh/
 /configs/
-
+/parsing_files/
 
 ##################################
 # Build Artifacts
