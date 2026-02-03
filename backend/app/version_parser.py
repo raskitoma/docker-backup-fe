@@ -1,5 +1,10 @@
 import os
-from main import logger
+import logging # Import logging directly
+
+# Get the uvicorn logger
+logger = logging.getLogger("uvicorn.error")
+# Force it to INFO level so our messages aren't filtered out
+logger.setLevel(logging.INFO)
 
 def parse_container_version(versions_path, container):
     """
