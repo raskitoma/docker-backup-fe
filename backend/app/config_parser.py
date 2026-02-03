@@ -1,7 +1,7 @@
 import re
 import json
 
-def parse_config(path):
+def parse_config(path): 
     sections = {}
     parent = None  # Tracks the [[double_bracket]] sections
     current = None # Tracks the [single_bracket] or current active dict

@@ -28,7 +28,8 @@ export default function ContainersTable({ containers, config }) {
   });
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-  const openConfig = (name) => {
+  const openConfig = (name, config) => {
+    console.warn("OPEN CONFIG:", name, config)
     setSelectedConfig(config[name])
     setCfgModal(true)
   }
@@ -41,8 +42,8 @@ export default function ContainersTable({ containers, config }) {
 
   const statusTemplate = (row) => {
     if(row.deleted) return <Tag severity="danger" value="DELETED"/>
-    if(!row.in_config) return <Tag severity="warning" value="NO CONFIG"/>
-    if(!row.cleared) return <Tag severity="info" value="NOT CLEARED"/>
+    if(!row.in_config) return <Tag severity="warning" value="NO BACKUP"/>
+    if(!row.cleared) return <Tag severity="info" value="BACKUP SET"/>
     return <Tag severity="success" value="OK"/>
   }
 
@@ -118,14 +119,13 @@ export default function ContainersTable({ containers, config }) {
 
         <Column
           header="Config"
-          body={(row)=>
-            row.in_config &&
+          body={(row)=> (
             <Button
               icon="pi pi-cog"
               text
-              onClick={()=>openConfig(row.name)}
+              onClick={()=>openConfig(row.name, config)}
             />
-          }
+          )}
         />
 
         <Column
