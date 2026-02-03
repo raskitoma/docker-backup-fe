@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from .config_parser import parse_config
 from .docker_reader import get_running_containers
 from .system_info import get_system_info
