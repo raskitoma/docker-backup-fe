@@ -15,7 +15,7 @@ def parse_status(path):
 
     if not os.path.exists(path) or os.path.getsize(path) == 0:
         logger.warning(f"Status file does not exist or is empty: {path}")
-        return []
+        return [f"Error parsing status file: {path} does not exist or is empty"]
 
     status_list = []
     current_container = None
@@ -53,7 +53,7 @@ def parse_status(path):
 
     except Exception as e:
         logger.error(f"Error parsing status file: {e}") # This is a life-saver for debugging!        
-        return []
+        return [f"Error parsing status file: {e}"]
 
     return status_list
 
@@ -67,7 +67,7 @@ def parse_status_detailed(path):
 
     if not os.path.exists(path) or os.path.getsize(path) == 0:
         logger.error(f"Error parsing status file: {path} does not exist or is empty")
-        return []
+        return [f"Error parsing status file: {path} does not exist or is empty"]
 
     detailed_list = []
     current_container = None
@@ -102,6 +102,6 @@ def parse_status_detailed(path):
 
     except Exception:
         logger.error(f"Error parsing status file: {e}") # This is a life-saver for debugging!        
-        return []
+        return [f"Error parsing status file: {e}"]
 
     return detailed_list
