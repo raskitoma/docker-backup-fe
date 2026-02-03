@@ -47,7 +47,8 @@ def parse_status(path):
                 status_list.append(current_entry)
 
     except Exception:
-        return []
+        print ("Error parsing status file.")
+        # return []
 
     return status_list
 
