@@ -1,4 +1,5 @@
 import os
+from main import logger
 
 def parse_container_version(versions_path, container):
     """
@@ -9,6 +10,9 @@ def parse_container_version(versions_path, container):
     file_name = f"{container}.version"
     full_path = os.path.join(versions_path, file_name)
     
+    logger.info(f"Parsing version file at: {full_path}")
+
+
     version_data = {}
 
     try:

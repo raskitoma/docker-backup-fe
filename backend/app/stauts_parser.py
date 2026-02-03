@@ -1,11 +1,14 @@
 import os
-import json
+from main import logger
 
 def parse_status(path):
     """
     Reads the whole status.yml file. 
     Returns a list of entries or [] on error/empty.
     """
+
+    logger.info(f"Parsing status file at: {path}")
+
     if not os.path.exists(path) or os.path.getsize(path) == 0:
         return []
 
@@ -53,6 +56,9 @@ def parse_status_detailed(path):
     Parses status_detailed.yml into a flat list.
     Returns a list of entries or [] on error/empty.
     """
+
+    logger.info(f"Parsing status file at: {path}")
+
     if not os.path.exists(path) or os.path.getsize(path) == 0:
         return []
 

@@ -7,6 +7,16 @@ from .file_scanner import scan_backups
 from .version_parser import parse_container_version
 from .stauts_parser import parse_status_detailed, parse_status
 from .database import SessionLocal, ContainerCache
+import logging
+
+# Configure logging to output to stdout
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(levelname)s:  %(asctime)s - %(message)s",
+    handlers=[logging.StreamHandler()]
+)
+
+logger = logging.getLogger("backup-api")
 
 CONFIG_ROOT = "/configs"
 CONFIG_PATH = f"{CONFIG_ROOT}/params/config.ini"
