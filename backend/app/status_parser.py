@@ -1,9 +1,10 @@
 import os
 import logging # Import logging directly
 
-# Setup a local logger for this module
-# Using __name__ is standard practice; it will show as 'stauts_parser' in logs
+# Get the uvicorn logger
 logger = logging.getLogger("uvicorn.error")
+# Force it to INFO level so our messages aren't filtered out
+logger.setLevel(logging.INFO)
 
 def parse_status(path):
     """
@@ -100,7 +101,7 @@ def parse_status_detailed(path):
             if current_entry:
                 detailed_list.append(current_entry)
 
-    except Exception:
+    except Exception as e:
         logger.error(f"Error parsing status file: {e}") # This is a life-saver for debugging!        
         return [f"Error parsing status file: {e}"]
 

@@ -5,7 +5,7 @@ from .docker_reader import get_running_containers
 from .system_info import get_system_info
 from .file_scanner import scan_backups
 from .version_parser import parse_container_version
-from .stauts_parser import parse_status_detailed, parse_status
+from .status_parser import parse_status_detailed, parse_status
 from .database import SessionLocal, ContainerCache
 import logging
 
