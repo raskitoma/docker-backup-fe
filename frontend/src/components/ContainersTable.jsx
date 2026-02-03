@@ -11,18 +11,20 @@ import { FilterMatchMode, FilterOperator } from 'primereact/api';
 
 import ConfigModal from "./ConfigModal"
 import FilesModal from "./FilesModal"
+import VersionModal from "./VersionModal"
 
 import { api } from "../api"
 
 export default function ContainersTable({ containers, config }) {
 
-  console.log(containers)
-
   const [cfgModal,setCfgModal] = useState(false)
   const [filesModal,setFilesModal] = useState(false)
+  const [verModal,setVerModal] = useState(false)
 
   const [selectedConfig,setSelectedConfig] = useState(null)
   const [fileStats,setFileStats] = useState(null)
+  const [selectedContainer,setSelectedContainer] = useState(null)
+  const [selectedVersion,setSelectedVersion] = useState(null)
 
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -30,9 +32,21 @@ export default function ContainersTable({ containers, config }) {
   });
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-  const openConfig = (name, config) => {
-    console.warn("OPEN CONFIG:", name, config)
-    setSelectedConfig(config[name])
+  const openVersion = (containerName) => {
+    if (!containerName) return
+    try {
+      api.get(`/versions/${containerName}`).then((res) => {
+        setSelectedVersion(res.data)
+        setVerModal(true)
+      })
+    } catch (error) {
+      console.error("Error opening version:", error)
+    }
+  }
+
+  const openConfig = (row) => {
+    const config_chosen = (row.in_config) ? config.containers[row.name] : config.containers_ignore[row.name]
+    setSelectedConfig(config_chosen)
     setCfgModal(true)
   }
 
@@ -101,7 +115,7 @@ export default function ContainersTable({ containers, config }) {
         showGridlines
         stripedRows
         rowHover
-        selectionLMode="single"
+        selectionMode="single"
         sortField="name"
         sortOrder={1}
         header={header}
@@ -125,7 +139,7 @@ export default function ContainersTable({ containers, config }) {
             <Button
               icon="pi pi-cog"
               text
-              onClick={()=>openConfig(row.name)}
+              onClick={()=>openConfig(row)}
             />
           )}
         />
@@ -142,6 +156,17 @@ export default function ContainersTable({ containers, config }) {
           }
         />
 
+        <Column
+          header="Version"
+          body={(row)=> (
+            <Button
+              icon="pi pi-info-circle"
+              text
+              onClick={()=>openVersion(row.name)}
+            />
+          )}
+        />
+
       </DataTable>
 
       <ConfigModal
@@ -149,6 +174,13 @@ export default function ContainersTable({ containers, config }) {
         onHide={()=>setCfgModal(false)}
         data={selectedConfig}
       />
+
+      <VersionModal
+        visible={verModal}
+        onHide={()=>setVerModal(false)}
+        data={selectedVersion}
+      />
+
 
       <FilesModal
         visible={filesModal}

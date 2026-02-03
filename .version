@@ -1,8 +1,7 @@
-2026-02-02
+2026-02-03
+ - Updated backend and frontend to fix container backup issues
+ - Fixed bugs related to container status display
+ - Improved UI for better user experience
 
-  - Add support to read data from:
-    - /configs/params/docker.version
-    - /configs/params/results/status.yml
-    - /configs/params/results/status_detailed.yml
 
-  - Updated backend and composer
+ 
